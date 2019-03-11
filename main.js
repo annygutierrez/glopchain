@@ -29,4 +29,47 @@ class Blockchain {
   createGenesisBlock() {
     return new Block(0, "11/03/2019", "Genesis block", "0");
   }
+
+  getLatestBlock() {
+    return this.chain[this.chain.length - 1];
+  }
+
+  addBlock(newBlock) {
+    // Set the previous block to the last block on the chain
+    newBlock.previousHash = this.getLatestBlock().hash;
+    //  We need to recalculate its hash, so everytime we change any of its properties
+    // in our block the hash function should be changed as well
+    newBlock.hash = newBlock.calculateHash();
+    this.chain.push(newBlock);
+  }
+  
+  // To verify the integrity of our blockchain
+  isChainValid() {
+    // We are NOT going to start with block 0 because block 0 is a genesis block
+    for(let i = 1; this.chain.length; i++) {
+      const currentBlock = this.chain[i];
+      const previousBlock = this.chain[i] - 1;
+
+      // Check if the hash of the block is still valid
+      if(currentBlock.hash !== currentBlock.calculateHash()) {
+        return false;
+      }
+
+      // Check if our block point to the correct previus block
+      if(currentBlock.previousHash !== previousBlock.hash) {
+        return false;
+      }
+    }
+
+    return true;
+  }
 }
+
+// Let's test it
+
+let glopcoin = new Blockchain();
+glopcoin.addBlock(new Block(1, "11/03/2019", { amount: 4 }));
+glopcoin.addBlock(new Block(2, "11/03/2019", { amount: 10 }));
+
+console.log('Is blockchain valid? ' + glopcoin.isChainValid());
+console.log(JSON.stringify(glopcoin, null, 4));
