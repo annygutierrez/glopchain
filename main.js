@@ -18,3 +18,15 @@ class Block {
     return SHA256(this.index + this.previousHash + this.timestamp + JSON.stringify(this.data)).toString();
   }
 }
+
+class Blockchain {
+  constructor() {
+    // This would be an array of blocks
+    // The first block on a blockchain is called a GENESIS block and it should be added manually
+    this.chain = [this.createGenesisBlock()];
+  }
+
+  createGenesisBlock() {
+    return new Block(0, "11/03/2019", "Genesis block", "0");
+  }
+}
