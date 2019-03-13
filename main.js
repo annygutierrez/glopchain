@@ -46,9 +46,9 @@ class Blockchain {
   // To verify the integrity of our blockchain
   isChainValid() {
     // We are NOT going to start with block 0 because block 0 is a genesis block
-    for(let i = 1; this.chain.length; i++) {
+    for(let i = 1; i < this.chain.length; i++) {
       const currentBlock = this.chain[i];
-      const previousBlock = this.chain[i] - 1;
+      const previousBlock = this.chain[i- 1];
 
       // Check if the hash of the block is still valid
       if(currentBlock.hash !== currentBlock.calculateHash()) {
