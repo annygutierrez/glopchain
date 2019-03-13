@@ -5,7 +5,7 @@ class Block {
   /**
    * The index is optional and it tell us where the block is on the chain.
    * The timestamp tell us when the block was created.
-   * Data includes any type of data that you want to associate with the block -How much mony was transfered and who is the sender and the reciver.
+   * Data includes any type of data that you want to associate with the block -How much money was transfered and who is the sender and the reciver.
    * The previous hash is a string that contains the hash of the block before this one - This is very important and ensures the importance of the blockchain.
    * @constructs Block
    * @param {number} index - Block number.
@@ -21,6 +21,10 @@ class Block {
     this.hash = this.calculateHash();
   }
 
+  /**
+   * @function calculateHash
+   * @returns {string} Hash SHA256: block number + previous hash + timestamp + data.toString()
+   */
   calculateHash() {
     return SHA256(this.index + this.previousHash + this.timestamp + JSON.stringify(this.data)).toString();
   }
