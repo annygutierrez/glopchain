@@ -31,20 +31,36 @@ class Block {
 }
 
 class Blockchain {
+
+  /**
+   * This would be an array of blocks.
+   * The first block on a blockchain is called a GENESIS block and it should be added manually.
+   * @constructs Blockchain
+   */
   constructor() {
-    // This would be an array of blocks
-    // The first block on a blockchain is called a GENESIS block and it should be added manually
     this.chain = [this.createGenesisBlock()];
   }
-
+  
+  /**
+   * @function createGenesisBlock
+   * @returns {object} Create a block inside the blockchain.
+   */
   createGenesisBlock() {
     return new Block(0, "11/03/2019", "Genesis block", "0");
   }
-
+  
+  /**
+   * @function getLatestBlock
+   * @returns {object} Returns the latest or current block of the blockchain.
+   */
   getLatestBlock() {
     return this.chain[this.chain.length - 1];
   }
-
+  
+  /**
+   * @function addBlock
+   * @param {object} newBlock - Add a new block to the blockchain.
+   */
   addBlock(newBlock) {
     // Set the previous block to the last block on the chain
     newBlock.previousHash = this.getLatestBlock().hash;
@@ -54,7 +70,11 @@ class Blockchain {
     this.chain.push(newBlock);
   }
 
-  // To verify the integrity of our blockchain
+  /**
+   * To verify the integrity of our blockchain
+   * @function isChainValid
+   * @returns {boolean} A boolean value to verify if the current and previuos hash of each block are correct.
+   */
   isChainValid() {
     // We are NOT going to start with block 0 because block 0 is a genesis block
     for (let i = 1; i < this.chain.length; i++) {
